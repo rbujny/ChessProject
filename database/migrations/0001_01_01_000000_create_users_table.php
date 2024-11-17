@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->string('login')->unique();
             $table->string('password');
             $table->enum('role', ['coordinator', 'player']);
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('club_id')->nullable();
             $table->foreign('club_id')->references('id')->on('clubs')->onDelete('cascade');
             $table->timestamps();
+            $table->boolean('new_account')->default(true);
         });
 
 

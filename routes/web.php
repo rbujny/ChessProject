@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
@@ -11,3 +12,7 @@ Route::get('/register', [RegisterController::class, 'register'])->name('register
 Route::post('/register/create', [RegisterController::class, 'actionRegister'])->name('register');
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/login/auth', [LoginController::class, 'actionLogin'])->name('actionLogin');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/player/chooseClub', [PlayerController::class, 'chooseClub'])->name('chooseClub');
+Route::post('/player/joinClub', [PlayerController::class, 'joinClub'])->name('joinClub');
+Route::post('/player/leaveClub', [PlayerController::class, 'leaveClub'])->name('leaveClub');

@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-<h1>Register now</h1>
+<h1>Log in to your account</h1>
 <form action={{ url('/login/auth') }} method="POST">
     @csrf
     @method("POST")

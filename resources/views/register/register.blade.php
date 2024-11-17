@@ -10,6 +10,7 @@
 <form action={{ url('/register/create') }} method="POST">
     @csrf
     @method("POST")
+    Enter name: <input name="name" type="text">
     Enter mail: <input name="login" type="email">
     Enter password: <input name="password" type="password" minlength="8" onchange="validatePassword(this.value)">
     <span id="passwordError" style="color: red"></span>

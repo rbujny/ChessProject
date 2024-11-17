@@ -4,19 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Models\Club;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class RegisterController extends Controller
 {
 
-    public function register(): View
+    public function register(): View | RedirectResponse
     {
+        if (Auth::check())
+        {
+            return redirect()->route('dashboard');
+        }
         return view('register.register');
     }
 
     public function actionRegister(): View
     {
         if (request()->validate([
+            'name' => 'required',
             'login' => 'required',
             'password' => 'required|min:8',
             'repeat' => 'required|same:password',
