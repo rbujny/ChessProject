@@ -11,19 +11,23 @@ use Illuminate\View\View;
 
 class PlayerController extends Controller
 {
-    public function chooseClub(): View
+    public function chooseClub(): View | RedirectResponse
     {
-        $clubs = Club::all();
-        $models = [];
-        foreach ($clubs as $club)
+        if (Auth::check() and Auth::user()->role == 'player' and Auth::user()->club_id == null)
         {
-            $models[$club->name] =
-                [
-                    "name" => $club->coordinator->name,
-                    "club_id" => $club->coordinator->id,
-                ];
+            $clubs = Club::all();
+            $models = [];
+            foreach ($clubs as $club)
+            {
+                $models[$club->name] =
+                    [
+                        "name" => $club->coordinator->name,
+                        "club_id" => $club->coordinator->id,
+                    ];
+            }
+            return view('player.chooseClub', ['clubs' => $models]);
         }
-        return view('player.chooseClub', ['clubs' => $models]);
+        return Redirect::route('dashboard')->with('error', 'You are not allowed to choose a club.');
     }
 
     public function joinClub(): RedirectResponse

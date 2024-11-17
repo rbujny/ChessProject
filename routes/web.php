@@ -4,6 +4,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\TournamentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [SiteController::class, 'index'])->name('index');
@@ -16,3 +17,5 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/player/chooseClub', [PlayerController::class, 'chooseClub'])->name('chooseClub');
 Route::post('/player/joinClub', [PlayerController::class, 'joinClub'])->name('joinClub');
 Route::post('/player/leaveClub', [PlayerController::class, 'leaveClub'])->name('leaveClub');
+Route::get('/tournament/create', [TournamentController::class, 'create'])->name('createTournament');
+Route::post('/tournament/actionCreate', [TournamentController::class, 'actionCreate'])->name('actionCreateTournament');

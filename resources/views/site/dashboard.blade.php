@@ -28,6 +28,10 @@
         @foreach($club->players as $player)
             <li>{{ $player->name }}</li>
         @endforeach
+    </ul>
+        <p>
+            Add <a href="{{url('/tournament/create')}}">tournament</a>
+        </p>
 @endif
 <p>Logout <a href={{ url('/logout') }}>Logout</a></p>
 </body>

@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('description');
             $table->dateTime('start_date');
+            $table->unsignedBigInteger('coordinator_id')->unique();
+            $table->foreign('coordinator_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
