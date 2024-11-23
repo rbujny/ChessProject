@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Club;
+use App\Models\Tournament;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +34,12 @@ class SiteController extends Controller
                 $user->save();
                 return redirect()->route('chooseClub');
             }
-            return view('site.dashboard', ['user' => $user, 'club' => $user->club]);
+            if ($user->role == 'coordinator')
+            {
+                $tournaments = Tournament::where('coordinator_id', $user->id)->get();
+            }
+            else $tournaments = [];
+            return view('site.dashboard', ['user' => $user, 'club' => $user->club, 'tournaments' => $tournaments]);
         }
 
         return redirect()->route('login')->with('error', 'Please log in to access the dashboard.');

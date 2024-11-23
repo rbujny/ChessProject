@@ -29,8 +29,17 @@
             <li>{{ $player->name }}</li>
         @endforeach
     </ul>
+    <p>Your last tournaments</p>
+    <ul>
+        @foreach($tournaments as $tournament)
+            <li><a>{{ $tournament->name }} </a></li>
+        @endforeach
+    </ul>
         <p>
             Add <a href="{{url('/tournament/create')}}">tournament</a>
+        </p>
+        <p>
+            Show <a href="{{url('/tournament/index')}}">tournament</a>
         </p>
 @endif
 <p>Logout <a href={{ url('/logout') }}>Logout</a></p>

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('wins');
             $table->integer('draws');
             $table->integer('losses');
-            $table->integer('grade');
+            $table->integer('grade')->default(0);
             $table->unsignedBigInteger('player_id');
             $table->foreign('player_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('tournament_id');

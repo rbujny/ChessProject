@@ -24,7 +24,7 @@ class RegisterController extends Controller
     {
         if (request()->validate([
             'name' => 'required',
-            'login' => 'required',
+            'login' => 'required|unique:users',
             'password' => 'required|min:8',
             'repeat' => 'required|same:password',
             'role' => 'required|in:player,coordinator',

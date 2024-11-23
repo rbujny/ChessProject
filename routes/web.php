@@ -5,6 +5,7 @@ use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TournamentController;
+use App\Http\Controllers\ResultController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [SiteController::class, 'index'])->name('index');
@@ -19,3 +20,9 @@ Route::post('/player/joinClub', [PlayerController::class, 'joinClub'])->name('jo
 Route::post('/player/leaveClub', [PlayerController::class, 'leaveClub'])->name('leaveClub');
 Route::get('/tournament/create', [TournamentController::class, 'create'])->name('createTournament');
 Route::post('/tournament/actionCreate', [TournamentController::class, 'actionCreate'])->name('actionCreateTournament');
+Route::get('/tournament/index', [TournamentController::class, 'index'])->name('indexTournament');
+Route::get('/result/add/{tournament_id}', [ResultController::class, 'add'])->name('addResult');
+Route::post('/result/actionAdd', [ResultController::class, 'actionAdd'])->name('actionAddResult');
+Route::get('/result/show/{tournament_id}', [ResultController::class, 'show'])->name('showResults');
+Route::get('/result/grade/{id}', [ResultController::class, 'grade'])->name('addGrade');
+Route::post('/result/setGrade', [ResultController::class, 'setGrade'])->name('setGrade');

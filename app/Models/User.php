@@ -55,4 +55,10 @@ class User extends Authenticatable
     {
         return 'login';
     }
+
+    public function playersWithoutResult()
+    {
+
+    }
+
 }
