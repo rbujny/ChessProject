@@ -21,8 +21,12 @@ class ResultController
             if ($tournament->coordinator_id != $user->id) {
                 return redirect()->route('index');
             }
+            $alreadyResults = Result::where('tournament_id', $tournament_id)->pluck('player_id')->toArray();
             $club = Club::where('coordinator_id', $user->id)->first();
-            $players = User::where('club_id', $club->id)->where('role', 'player')->get();
+            $players = User::where('club_id', $club->id)
+                ->where('role', 'player')
+                ->whereNotIn('id', $alreadyResults)
+                ->get();
             return view('result.add', ['players' => $players, 'tournament' => $tournament]);
         }
         else
@@ -66,7 +70,7 @@ class ResultController
 
     public function edit(int $id)
     {
-
+        //@TODO
     }
 
     public function grade(int $id)
