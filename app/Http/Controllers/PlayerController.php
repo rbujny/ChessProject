@@ -52,4 +52,22 @@ class PlayerController extends Controller
         return Redirect::route('dashboard')->with('error', 'Failed to leave club.');
     }
 
+    public function photo()
+    {
+        return view('player.photo');
+    }
+
+    public function uploadPhoto()
+    {
+        $user = Auth::user();
+        $photoName  = $user->name." ".$user->id . "." . request('photo')->getClientOriginalExtension();
+        request('photo')->move(public_path('images'), $photoName);
+        $user->photo = "images/".$photoName;
+        if ($user->save())
+        {
+            return Redirect::route('dashboard');
+        }
+        return Redirect::route('photo')->with('error', 'Failed to upload photo.');
+    }
+
 }

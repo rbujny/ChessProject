@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tournament;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -52,4 +53,32 @@ class TournamentController
         return redirect()->route('login')->with('error', "You are not allowed to index a tournament.");
     }
 
+    public function generateReport()
+    {
+        $tournaments = Tournament::with(['results', 'results.player'])->get();
+
+        $reportData = $tournaments->map(function ($tournament) {
+            $averageGrade = $tournament->results->avg('grade'); // Średnia ocena
+            return [
+                'name' => $tournament->name,
+                'description' => $tournament->description,
+                'start_date' => $tournament->start_date,
+                'results' => $tournament->results->map(function ($result) {
+                    return [
+                        'player_name' => $result->player->name,
+                        'games' => $result->games,
+                        'wins' => $result->wins,
+                        'draws' => $result->draws,
+                        'losses' => $result->losses,
+                        'grade' => $result->grade,
+                    ];
+                }),
+                'average_grade' => $averageGrade,
+            ];
+        });
+
+        $pdf = Pdf::loadView('tournament.report', ['reportData' => $reportData]);
+
+        return $pdf->download('tournament_report.pdf');
+    }
 }

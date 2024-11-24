@@ -37,9 +37,14 @@ class SiteController extends Controller
             if ($user->role == 'coordinator')
             {
                 $tournaments = Tournament::where('coordinator_id', $user->id)->get();
+                $results = [];
             }
-            else $tournaments = [];
-            return view('site.dashboard', ['user' => $user, 'club' => $user->club, 'tournaments' => $tournaments]);
+            else
+            {
+                $results = $user->results;
+                $tournaments = [];
+            }
+            return view('site.dashboard', ['user' => $user, 'club' => $user->club, 'tournaments' => $tournaments, 'results' => $results]);
         }
 
         return redirect()->route('login')->with('error', 'Please log in to access the dashboard.');
