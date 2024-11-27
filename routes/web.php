@@ -5,6 +5,7 @@ use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TournamentController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ResultController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,3 +34,7 @@ Route::get('/result/grade/{id}', [ResultController::class, 'grade'])->name('addG
 Route::post('/result/setGrade', [ResultController::class, 'setGrade'])->name('setGrade');
 Route::get('/result/edit/{id}', [ResultController::class, 'edit'])->name('resultEdit');
 Route::post('/result/update/{id}', [ResultController::class, 'update'])->name('resultUpdate');
+Route::get('/message/send', [MessageController::class, 'send'])->name('send');
+Route::post('/message/sendMessage', [MessageController::class, 'sendMessage'])->name('sendMessage');
+Route::get('/message/list', [MessageController::class, 'listMessage'])->name('listMessage');
+Route::get('/message/details/{id}', [MessageController::class, 'detailsMessage'])->name('detailsMessage');

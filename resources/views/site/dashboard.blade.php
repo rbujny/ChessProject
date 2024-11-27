@@ -56,6 +56,14 @@
         </p>
     @endif
 
+    @if($messages > 0)
+        <p>You've got <b>{{$messages}} unread</b> <a href="{{url('/message/list')}}">messages </a></p>
+    @else
+        <p>
+            Upload <a href="{{url('/player/photo')}}">photo</a>
+        </p>
+    @endif
+
     <p>
         Add <a href="{{url('/result/photo')}}">result</a>
     </p>
@@ -73,6 +81,8 @@
             <a href="{{url("/result/show/player/coordinator")."/".$player->id}}"><li>{{ $player->name }}</li></a>
         @endforeach
     </ul>
+    <p>Send <a href={{ url('/message/send') }}>message</a> to your players</p>
+    <p>See your sent <a href={{ url('/message/list') }}>messages</a></p>
     <p>Your last tournaments</p>
     <ul>
         @foreach($tournaments as $tournament)
