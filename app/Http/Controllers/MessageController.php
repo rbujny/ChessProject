@@ -20,14 +20,8 @@ class MessageController extends Controller
         if (Auth::check())
         {
             $user = Auth::user();
-            if ($user->role == 'coordinator')
-            {
-                $messages = Message::where('sender_id', $user->id)->get();
-            }
-            else
-            {
-                $messages = Message::where('receiver_id', $user->id)->get();
-            }
+            if ($user->role == 'coordinator') $messages = Message::where('sender_id', $user->id)->get();
+            else $messages = Message::where('receiver_id', $user->id)->get();
             return view('message.list', ['messages' => $messages, 'role' => $user->role]);
         }
         else
@@ -96,7 +90,7 @@ class MessageController extends Controller
             }
             if ($message->save())
             {
-                return redirect()->route('index')->with('success', 'Message sent successfully.');
+                return redirect()->route('dashboard')->with('success', 'Message sent successfully.');
             }
             else {
                 return redirect()->route('send')->with('error', 'Failed to send message.');

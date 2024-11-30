@@ -45,12 +45,11 @@ class ResultController
             'losses' => 'required|integer',
             'player_id' => 'required|integer',
             'tournament_id' => 'required|integer',
-        ]));
+        ]))
         {
             $data = request()->all();
             $result = new Result();
             $result->fill($data);
-            $result->grade = 0; // @TODO przy nowej migracji do usuniecia
             if ($result->save())
             {
                 return redirect('result/show/'.$data["tournament_id"])->with('success', 'Result added successfully.');
@@ -60,12 +59,20 @@ class ResultController
                 return redirect('result/add')->with('error', 'Failed to add result.');
             }
         }
+        return redirect('result/add')->with('error', 'Failed to add result.');
     }
 
     public function show(int $tournament_id)
     {
-        $results = Result::where('tournament_id', $tournament_id)->get();
-        return view('result.show', ['results' => $results, 'tournament_id' => $tournament_id]);
+        if (Auth::check())
+        {
+            $results = Result::where('tournament_id', $tournament_id)->get();
+            return view('result.show', ['results' => $results, 'tournament_id' => $tournament_id]);
+        }
+        else
+        {
+            return redirect()->route('index')->with('error', 'You need to be logged in to view results.');
+        }
     }
 
     public function showByPlayer()
@@ -98,8 +105,14 @@ class ResultController
 
     public function edit(int $id)
     {
-        $result = Result::where('id', $id)->first();
-        return view('result.edit', ['result' => $result]);
+        if (Auth::check() and Auth::User()->role == 'coordinator') {
+            $result = Result::where('id', $id)->first();
+            return view('result.edit', ['result' => $result]);
+        }
+        else
+        {
+            return redirect()->route('index');
+        }
     }
 
     public function update(int $id)

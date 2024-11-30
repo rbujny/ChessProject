@@ -43,18 +43,29 @@ class PlayerController extends Controller
 
     public function leaveClub(): RedirectResponse
     {
-        $user = Auth::user();
-        $user->club_id = null;
-        if ($user->save())
+        if (Auth::check())
         {
-            return Redirect::route('dashboard');
+            $user = Auth::user();
+            $user->club_id = null;
+            if ($user->save())
+            {
+                return Redirect::route('dashboard');
+            }
+            return Redirect::route('dashboard')->with('error', 'Failed to leave club.');
         }
-        return Redirect::route('dashboard')->with('error', 'Failed to leave club.');
+        return Redirect::route('index')->with('error', 'You are not allowed to leave a club.');
     }
 
     public function photo()
     {
-        return view('player.photo');
+        if (Auth::check() and Auth::user()->role == 'player')
+        {
+            return view('player.photo');
+        }
+        else
+        {
+            return Redirect::route('index')->with('error', 'You are not allowed to upload a photo.');
+        }
     }
 
     public function uploadPhoto()

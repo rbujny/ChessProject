@@ -1,40 +1,60 @@
 <?php
 
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\PlayerController;
-use App\Http\Controllers\SiteController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\TournamentController;
-use App\Http\Controllers\MessageController;
-use App\Http\Controllers\ResultController;
+use App\Http\Controllers\{
+    LoginController,
+    PlayerController,
+    SiteController,
+    RegisterController,
+    TournamentController,
+    MessageController,
+    ResultController
+};
 use Illuminate\Support\Facades\Route;
 
+// Public Routes
 Route::get('/', [SiteController::class, 'index'])->name('index');
-Route::get('/dashboard', [SiteController::class, 'dashboard'])->name('dashboard')->middleware('auth');;
 Route::get('/register', [RegisterController::class, 'register'])->name('register');
 Route::post('/register/create', [RegisterController::class, 'actionRegister'])->name('register');
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/login/auth', [LoginController::class, 'actionLogin'])->name('actionLogin');
-Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-Route::get('/player/chooseClub', [PlayerController::class, 'chooseClub'])->name('chooseClub');
-Route::post('/player/joinClub', [PlayerController::class, 'joinClub'])->name('joinClub');
-Route::post('/player/leaveClub', [PlayerController::class, 'leaveClub'])->name('leaveClub');
-Route::get('/player/photo', [PlayerController::class, 'photo'])->name('photo');
-Route::post('/player/uploadPhoto', [PlayerController::class, 'uploadPhoto'])->name('uploadPhoto');
-Route::get('/tournament/create', [TournamentController::class, 'create'])->name('createTournament');
-Route::post('/tournament/actionCreate', [TournamentController::class, 'actionCreate'])->name('actionCreateTournament');
-Route::get('/tournament/index', [TournamentController::class, 'index'])->name('indexTournament');
-Route::get('/tournament/generateReport', [TournamentController::class, 'generateReport'])->name('generateReport');
-Route::get('/result/add/{tournament_id}', [ResultController::class, 'add'])->name('addResult');
-Route::post('/result/actionAdd', [ResultController::class, 'actionAdd'])->name('actionAddResult');
-Route::get('/result/show/{tournament_id}', [ResultController::class, 'show'])->name('showResults');
-Route::get('/result/show/player/personal', [ResultController::class, 'showByPlayer'])->name('showByPlayer');
-Route::get('/result/show/player/coordinator/{player_id}', [ResultController::class, 'showByPlayerForCoordinator'])->name('showByPlayerForCoordinator');
-Route::get('/result/grade/{id}', [ResultController::class, 'grade'])->name('addGrade');
-Route::post('/result/setGrade', [ResultController::class, 'setGrade'])->name('setGrade');
-Route::get('/result/edit/{id}', [ResultController::class, 'edit'])->name('resultEdit');
-Route::post('/result/update/{id}', [ResultController::class, 'update'])->name('resultUpdate');
-Route::get('/message/send', [MessageController::class, 'send'])->name('send');
-Route::post('/message/sendMessage', [MessageController::class, 'sendMessage'])->name('sendMessage');
-Route::get('/message/list', [MessageController::class, 'listMessage'])->name('listMessage');
-Route::get('/message/details/{id}', [MessageController::class, 'detailsMessage'])->name('detailsMessage');
+
+// Authenticated Routes
+Route::middleware('auth')->group(function () {
+    // Dashboard
+    Route::get('/dashboard', [SiteController::class, 'dashboard'])->name('dashboard');
+    Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+
+    Route::prefix('player')->name('player.')->group(function () {
+        Route::get('chooseClub', [PlayerController::class, 'chooseClub'])->name('chooseClub');
+        Route::post('joinClub', [PlayerController::class, 'joinClub'])->name('joinClub');
+        Route::post('leaveClub', [PlayerController::class, 'leaveClub'])->name('leaveClub');
+        Route::get('photo', [PlayerController::class, 'photo'])->name('photo');
+        Route::post('uploadPhoto', [PlayerController::class, 'uploadPhoto'])->name('uploadPhoto');
+    });
+
+    Route::prefix('tournament')->name('tournament.')->group(function () {
+        Route::get('create', [TournamentController::class, 'create'])->name('create');
+        Route::post('actionCreate', [TournamentController::class, 'actionCreate'])->name('actionCreate');
+        Route::get('index', [TournamentController::class, 'index'])->name('index');
+        Route::get('generateReport', [TournamentController::class, 'generateReport'])->name('generateReport');
+    });
+
+    Route::prefix('result')->name('result.')->group(function () {
+        Route::get('add/{tournament_id}', [ResultController::class, 'add'])->name('add');
+        Route::post('actionAdd', [ResultController::class, 'actionAdd'])->name('actionAdd');
+        Route::get('show/{tournament_id}', [ResultController::class, 'show'])->name('show');
+        Route::get('show/player/personal', [ResultController::class, 'showByPlayer'])->name('showByPlayer');
+        Route::get('show/player/coordinator/{player_id}', [ResultController::class, 'showByPlayerForCoordinator'])->name('showByPlayerForCoordinator');
+        Route::get('grade/{id}', [ResultController::class, 'grade'])->name('addGrade');
+        Route::post('setGrade', [ResultController::class, 'setGrade'])->name('setGrade');
+        Route::get('edit/{id}', [ResultController::class, 'edit'])->name('edit');
+        Route::post('update/{id}', [ResultController::class, 'update'])->name('update');
+    });
+
+    Route::prefix('message')->name('message.')->group(function () {
+        Route::get('send', [MessageController::class, 'send'])->name('send');
+        Route::post('sendMessage', [MessageController::class, 'sendMessage'])->name('sendMessage');
+        Route::get('list', [MessageController::class, 'listMessage'])->name('list');
+        Route::get('details/{id}', [MessageController::class, 'detailsMessage'])->name('details');
+    });
+});
