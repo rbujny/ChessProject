@@ -1,13 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-<h1>Main page</h1>
-<p>To login <a href={{ url('/login') }}>Click here</a></p>
-<p>To register <a href={{ url('/register') }}>Click here</a></p>
-</body>
-</html>
+@extends('layout')
+
+@section('title', 'Welcome')
+
+@section('header', 'Welcome to the Tournament System')
+
+
+@section('content')
+    <div class="container">
+        <p><a href="{{ url('/login') }}">Login</a> to access your dashboard.</p>
+        <p>Don't have an account? <a href="{{ url('/register') }}">Register here</a>.</p>
+    </div>
+@endsection

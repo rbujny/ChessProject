@@ -22,7 +22,7 @@ class PlayerController extends Controller
                 $models[$club->name] =
                     [
                         "name" => $club->coordinator->name,
-                        "club_id" => $club->coordinator->id,
+                        "club_id" => $club->coordinator->club_id,
                     ];
             }
             return view('player.chooseClub', ['clubs' => $models]);

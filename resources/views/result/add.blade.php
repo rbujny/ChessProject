@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add result</title>
+    <title>Add Result</title>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
-<h1>Add new result for tournament {{ $tournament["name"] }}</h1>
-<form action={{ url('/result/actionAdd') }} method="POST">
+<h1>Add New Result for {{ $tournament["name"] }}</h1>
+
+<form action="{{ url('/result/actionAdd') }}" method="POST">
     @csrf
     @method("POST")
 
@@ -23,7 +25,7 @@
     <label for="losses">Losses:</label>
     <input type="number" id="losses" name="losses" disabled required>
 
-    <input type="hidden" name="tournament_id" value="{{ $tournament["id"] }}">
+    <input type="hidden" name="tournament_id" value="{{ $tournament['id'] }}">
 
     <label for="player">Player:</label>
     <select id="player" name="player_id" required>
@@ -34,39 +36,37 @@
 
     <button type="submit" id="confirm" disabled>Confirm</button>
 </form>
-
+<a href="{{url("/dashboard")}}">Back to dashboard</a>
 <script>
-    document.getElementById('games').addEventListener('input', function() {
-        const games = parseInt(this.value);
-        const wins = document.getElementById('wins');
-        const draws = document.getElementById('draws');
-        const losses = document.getElementById('losses');
-        const confirmButton = document.getElementById('confirm');
+    const gamesField = document.getElementById('games');
+    const winsField = document.getElementById('wins');
+    const drawsField = document.getElementById('draws');
+    const lossesField = document.getElementById('losses');
+    const confirmButton = document.getElementById('confirm');
 
+    function validate() {
+        const games = parseInt(gamesField.value || 0);
+        const wins = parseInt(winsField.value || 0);
+        const draws = parseInt(drawsField.value || 0);
+        const losses = parseInt(lossesField.value || 0);
+        confirmButton.disabled = (wins + draws + losses !== games);
+    }
+
+    gamesField.addEventListener('input', () => {
+        const games = parseInt(gamesField.value);
         if (games > 0) {
-            wins.disabled = false;
-            draws.disabled = false;
-            losses.disabled = false;
+            winsField.disabled = false;
+            drawsField.disabled = false;
+            lossesField.disabled = false;
         } else {
-            wins.disabled = true;
-            draws.disabled = true;
-            losses.disabled = true;
+            winsField.disabled = true;
+            drawsField.disabled = true;
+            lossesField.disabled = true;
             confirmButton.disabled = true;
         }
-
-        wins.addEventListener('input', validate);
-        draws.addEventListener('input', validate);
-        losses.addEventListener('input', validate);
-
-        function validate() {
-            const total = parseInt(wins.value || 0) + parseInt(draws.value || 0) + parseInt(losses.value || 0);
-            if (total === games) {
-                confirmButton.disabled = false;
-            } else {
-                confirmButton.disabled = true;
-            }
-        }
     });
+
+    [winsField, drawsField, lossesField].forEach(field => field.addEventListener('input', validate));
 </script>
 </body>
 </html>

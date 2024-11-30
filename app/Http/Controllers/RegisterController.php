@@ -20,7 +20,7 @@ class RegisterController extends Controller
         return view('register.register');
     }
 
-    public function actionRegister(): View
+    public function actionRegister(): View | RedirectResponse
     {
         if (request()->validate([
             'name' => 'required',
@@ -50,6 +50,10 @@ class RegisterController extends Controller
                 $user->save();
             }
 
+        }
+        else
+        {
+            return redirect()->route('register')->with('error', 'Invalid data, probably email is already taken');
         }
 
         return view('register.actionRegister');

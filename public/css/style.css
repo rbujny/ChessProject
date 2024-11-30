@@ -1,0 +1,193 @@
+/* General Styles */
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #eef2f7;
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin: 20px 0;
+    font-size: 2.5em;
+}
+
+a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+form label {
+    font-weight: bold;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form input[type="number"],
+form select,
+form textarea {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+form input[type="file"] {
+    padding: 8px;
+}
+
+form button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+form button:hover {
+    background-color: #2980b9;
+}
+
+/* Table Styling */
+.table {
+    width: 100%;
+    max-width: 750px;
+    border-collapse: collapse;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.table th,
+.table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+}
+
+.table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.logout-link {
+    position: absolute;
+    top: 20px; /* Distance from the top of the viewport */
+    right: 20px; /* Distance from the right of the viewport */
+    font-size: 16px; /* Adjust the font size */
+    color: #3498db; /* Optional: Link color */
+    text-decoration: none; /* Optional: Remove underline */
+    font-weight: bold; /* Optional: Make it bold */
+}
+
+.logout-link:hover {
+    text-decoration: underline; /* Optional: Add underline on hover */
+}
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.actions {
+    margin: 15px 0;
+}
+
+.actions a {
+    margin-right: 10px;
+    font-size: 14px;
+    display: inline-block;
+}
+
+.actions a:hover {
+    text-decoration: underline;
+}
+
+ul {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+    text-align: center; /* Center-align the list items */
+}
+
+ul li {
+    display: inline-block; /* Make list items inline-block for better centering */
+    margin: 5px 10px; /* Add spacing between list items */
+}
+
+ul li a {
+    display: block; /* Ensure link area fills the list item */
+    padding: 10px 15px; /* Add padding for better clickability */
+    color: #3498db; /* Optional: Link color */
+    text-decoration: none; /* Optional: Remove underline */
+}
+
+ul li a:hover {
+    text-decoration: underline; /* Optional: Add underline on hover */
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    form button {
+        width: 100%;
+    }
+
+    .table {
+        font-size: 14px;
+    }
+}

@@ -1,18 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-<h1>Log in to your account</h1>
-<form action={{ url('/login/auth') }} method="POST">
-    @csrf
-    @method("POST")
-    Enter mail: <input name="login" type="email">
-    Enter password: <input name="password" type="password">
-    <button type="submit" id="confirm">Confirm</button>
-</form>
-</body>
-</html>
+@extends('layout')
+
+@section('title', 'Login')
+
+@section('header', 'Log in to your account')
+
+
+@section('content')
+    <div class="container">
+        <form action="{{ url('/login/auth') }}" method="POST">
+            @csrf
+            <label for="email">Email</label>
+            <input name="login" id="email" type="email" placeholder="Enter your email" required>
+            <label for="password">Password</label>
+            <input name="password" id="password" type="password" placeholder="Enter your password" required>
+            <button type="submit">Confirm</button>
+        </form>
+    </div>
+@endsection

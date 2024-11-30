@@ -92,7 +92,7 @@ class MessageController extends Controller
                 $message = new Message();
                 $message->fill($data);
                 $message->sender_id = Auth::user()->id;
-                $message->receiver_id = $data["receiver_id"];
+                $message->receiver_id = $data["receiver"];
             }
             if ($message->save())
             {
