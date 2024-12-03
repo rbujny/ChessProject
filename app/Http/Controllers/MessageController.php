@@ -26,7 +26,7 @@ class MessageController extends Controller
         }
         else
         {
-            return redirect()->route('index');
+            return redirect()->route('dashboard')->withErrors(['error' => 'You are not allowed to view messages.']);
         }
     }
 
@@ -40,12 +40,12 @@ class MessageController extends Controller
                 $message->save();
                 return view('message.details', ['message' => $message]);
             } else {
-                return redirect()->route('listMessage')->with('error', 'Message not found.');
+                return redirect()->route('listMessage')->withErrors(['error' => 'Message not found.']);
             }
         }
         else
         {
-            return redirect()->route('index');
+            return redirect()->route('dashboard')->withErrors(['error' => 'You are not allowed to view messages.']);
         }
     }
 
@@ -57,7 +57,7 @@ class MessageController extends Controller
             return view('message.send', ['players' => $players]);
         }
         else
-            return redirect()->route('index');
+            return redirect()->route('dashboard')->withErrors(['error' => 'You are not allowed to send messages.']);
     }
 
     public function sendMessage(): RedirectResponse
@@ -93,7 +93,7 @@ class MessageController extends Controller
                 return redirect()->route('dashboard')->with('success', 'Message sent successfully.');
             }
             else {
-                return redirect()->route('send')->with('error', 'Failed to send message.');
+                return redirect()->route('send')->withErrors(['error' => 'Message not sent.']);
             }
         }
     }

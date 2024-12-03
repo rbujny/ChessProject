@@ -50,7 +50,7 @@ class SiteController extends Controller
             return view('site.dashboard', ['user' => $user, 'club' => $user->club, 'tournaments' => $tournaments, 'results' => $results, 'messages' => $messages]);
         }
 
-        return redirect()->route('login')->with('error', 'Please log in to access the dashboard.');
+        return redirect()->route('login')->withErrors(['error' => 'Please login to access the dashboard.']);
     }
 
 }

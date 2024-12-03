@@ -9,7 +9,11 @@
 <a href="{{ url('/logout') }}" class="logout-link">Logout</a>
 <div class="container">
     <p>Welcome to your dashboard, <strong>{{ $user->name }}</strong>.</p>
-
+    @if (session('success'))
+        <div class="alert alert-success">
+            <strong><span style="color: green">{{ session('success') }}</span></strong>
+        </div>
+    @endif
     @if($user->role == 'player')
         @if($user->photo)
             <img src="{{ asset($user->photo) }}" alt="Profile Photo" width="100" height="100">

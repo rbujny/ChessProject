@@ -53,7 +53,7 @@ class RegisterController extends Controller
         }
         else
         {
-            return redirect()->route('register')->with('error', 'Invalid data, probably email is already taken');
+            return redirect()->route('register')->withErrors(['error' => 'Invalid data, probably email is already taken']);
         }
 
         return view('register.actionRegister');

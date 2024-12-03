@@ -27,7 +27,7 @@ class PlayerController extends Controller
             }
             return view('player.chooseClub', ['clubs' => $models]);
         }
-        return Redirect::route('dashboard')->with('error', 'You are not allowed to choose a club.');
+        return Redirect::route('dashboard')->withErrors(['error' => 'You are not allowed to choose a club.']);
     }
 
     public function joinClub(): RedirectResponse
@@ -36,9 +36,9 @@ class PlayerController extends Controller
         $user->club_id = request('club');
         if ($user->save())
         {
-            return Redirect::route('dashboard');
+            return Redirect::route('dashboard')->with('success', 'You have joined the club.');
         }
-        return Redirect::route('chooseClub')->with('error', 'Failed to join club.');
+        return Redirect::route('chooseClub')->withErrors(['error' => 'Failed to join the club.']);
     }
 
     public function leaveClub(): RedirectResponse
@@ -51,9 +51,9 @@ class PlayerController extends Controller
             {
                 return Redirect::route('dashboard');
             }
-            return Redirect::route('dashboard')->with('error', 'Failed to leave club.');
+            return Redirect::route('dashboard')->withErrors(['error' => 'Failed to leave the club.']);
         }
-        return Redirect::route('index')->with('error', 'You are not allowed to leave a club.');
+        return Redirect::route('index')->withErrors(['error' => 'You are not allowed to leave the club.']);
     }
 
     public function photo()
@@ -64,7 +64,7 @@ class PlayerController extends Controller
         }
         else
         {
-            return Redirect::route('index')->with('error', 'You are not allowed to upload a photo.');
+            return Redirect::route('index')->withErrors(['error' => 'You are not allowed to upload a photo.']);
         }
     }
 
@@ -78,7 +78,7 @@ class PlayerController extends Controller
         {
             return Redirect::route('dashboard');
         }
-        return Redirect::route('photo')->with('error', 'Failed to upload photo.');
+        return Redirect::route('photo')->withErrors(['error' => 'Failed to upload photo.']);
     }
 
 }

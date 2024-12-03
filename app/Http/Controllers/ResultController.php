@@ -135,7 +135,7 @@ class ResultController
             }
             else
             {
-                return redirect('result/edit/'.$data['result_id'])->with('error', 'Failed to update result.');
+                return redirect('result/edit/'.$data['result_id'])->withErrors(['error' => 'Failed to update result.']);
             }
         }
     }
@@ -147,7 +147,7 @@ class ResultController
         }
         else
         {
-            return redirect()->route('index');
+            return redirect()->route('dashboard')->withErrors(['error' => 'You are not allowed to grade results.']);
         }
     }
 
@@ -167,7 +167,7 @@ class ResultController
             }
             else
             {
-                return redirect('result/grade/'.$data['result_id'])->with('error', 'Failed to set grade.');
+                return redirect('result/grade/'.$data['result_id'])->withErrors(['error' => 'Failed to set grade.']);
             }
         }
     }

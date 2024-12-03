@@ -23,7 +23,7 @@ class LoginController
         $password = request('password');
 
         if (!auth()->attempt(['login' => $login, 'password' => $password])) {
-            return redirect()->back();
+            return redirect()->back()->withErrors(['error' => 'Invalid login or password']);
         }
 
         return redirect()->route('dashboard');

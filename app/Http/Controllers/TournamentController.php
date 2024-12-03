@@ -17,7 +17,7 @@ class TournamentController
         {
             return view('tournament.create', ['coordinator' => Auth::user()]);
         }
-        return redirect()->route('login')->with('error', "You are not allowed to create a tournament.");
+        return redirect()->route('login')->withErrors(['error' => ' You are not allowed to create a tournament.']);
     }
 
     public function actionCreate()
@@ -38,7 +38,7 @@ class TournamentController
             }
             else
             {
-                return redirect('tournament/create')->with('error', 'Failed to create tournament.');
+                return redirect('tournament/create')->withErrors(['error' => 'Tournament could not be created.']);
             }
         }
     }
@@ -50,7 +50,7 @@ class TournamentController
             $tournaments = Tournament::where('coordinator_id', Auth::user()->id)->get();
             return view('tournament.index', ['tournaments' => $tournaments]);
         }
-        return redirect()->route('login')->with('error', "You are not allowed to index a tournament.");
+        return redirect()->route('login')->withErrors(['error' => 'You are not allowed to view tournaments.']);
     }
 
     public function generateReport()
